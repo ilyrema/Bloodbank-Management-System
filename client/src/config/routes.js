@@ -17,7 +17,13 @@ const ROUTE = {
         TERMS: '/terms',
     },
     DONOR: {
+        INDEX: '/donor',
 
+        DASHBOARD: '/donor/dashboard',
+        HISTORY: '/donor/history',
+        INFORMATION: '/donor/information',
+        SCHEDULE: '/donor/schedule',
+        SETTINGS: '/donor/settings',
     },
     ADMIN: {
         INDEX: '/admin',

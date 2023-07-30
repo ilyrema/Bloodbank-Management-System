@@ -4,6 +4,12 @@ import { AdminReports } from '../pages/admin/Reports';
 import { AdminRequest } from '../pages/admin/Request';
 import { AdminSettings } from '../pages/admin/Settings';
 
+import { DonorDashboard } from '../pages/donor/Dashboard';
+import { DonorHistory } from '../pages/donor/History';
+import { DonorInformation } from '../pages/donor/Information';
+import { DonorSchedule } from '../pages/donor/Schedule';
+import { DonorSettings } from '../pages/donor/Settings';
+
 import { HospitalDashboard } from '../pages/hospital/Dashboard';
 import { HospitalHistory } from '../pages/hospital/History';
 import { HospitalReports } from '../pages/hospital/Reports';
@@ -18,13 +24,6 @@ import { PublicPrivacy } from '../pages/public/Privacy';
 import { PublicRegister, PublicRegisterDonor, PublicRegisterHospital } from '../pages/public/Register';
 import { PublicTerms } from '../pages/public/Terms';
 
-const Hospital = {
-    Dashboard: HospitalDashboard,
-    Request: HospitalRequest,
-    Reports: HospitalReports,
-    History: HospitalHistory,
-    Settings: HospitalSettings,
-}
 
 const Admin = {
     Dashboard: AdminDashboard,
@@ -32,6 +31,22 @@ const Admin = {
     Reports: AdminReports,
     History: AdminHistory,
     Settings: AdminSettings,
+}
+
+const Donor = {
+    Dashboard: DonorDashboard,
+    History: DonorHistory,
+    Information: DonorInformation,
+    Schedule: DonorSchedule,
+    Settings: DonorSettings,
+}
+
+const Hospital = {
+    Dashboard: HospitalDashboard,
+    Request: HospitalRequest,
+    Reports: HospitalReports,
+    History: HospitalHistory,
+    Settings: HospitalSettings,
 }
 
 const Public = {
@@ -46,5 +61,5 @@ const Public = {
     Terms: PublicTerms,
 }
 
-export { Admin, Hospital, Public };
+export { Admin, Donor, Hospital, Public };
 

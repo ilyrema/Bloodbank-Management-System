@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { Admin, Hospital, Public } from './config/pages';
+import { Admin, Hospital, Public, Donor } from './config/pages';
 import ROUTE from './config/routes';
 
 
@@ -26,6 +26,13 @@ function App() {
                 <Route path={ROUTE.ADMIN.REQUEST} element={<Admin.Request />} />
                 <Route path={ROUTE.ADMIN.REPORTS} element={<Admin.Reports />} />
                 <Route path={ROUTE.ADMIN.SETTINGS} element={<Admin.Settings />} />
+
+                <Route path={ROUTE.DONOR.INDEX} element={<Navigate to={ROUTE.DONOR.DASHBOARD} replace />} />
+                <Route path={ROUTE.DONOR.DASHBOARD} element={<Donor.Dashboard />} />
+                <Route path={ROUTE.DONOR.HISTORY} element={<Donor.History />} />
+                <Route path={ROUTE.DONOR.INFORMATION} element={<Donor.Information />} />
+                <Route path={ROUTE.DONOR.SCHEDULE} element={<Donor.Schedule />} />
+                <Route path={ROUTE.DONOR.SETTINGS} element={<Donor.Settings />} />
 
                 <Route path={ROUTE.HOSPITAL.INDEX} element={<Navigate to={ROUTE.HOSPITAL.DASHBOARD} replace />} />
                 <Route path={ROUTE.HOSPITAL.DASHBOARD} element={<Hospital.Dashboard />} />
