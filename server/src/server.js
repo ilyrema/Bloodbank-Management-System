@@ -24,15 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 
 app.use('/api/:key', [MIDDLEWARE.VALIDATE_API_KEY], ROUTER.API);
-app.use('/jwt', [MIDDLEWARE.VALIDATE_JWT_SESSION], (req, res) => {
-    res.json({ message: 'Protected route accessed successfully.', user: req.user });
-});
 app.use('/auth', ROUTER.AUTH);
 
 
