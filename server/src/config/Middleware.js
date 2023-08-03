@@ -1,5 +1,6 @@
-import ValidateApiKey from '../middlewares/ValidateApiKey.js';
-import ValidateJWTSession from '../middlewares/ValidateJWTSession.js';
+import ApiValidate from '../middlewares/ApiValidate.js';
+import SessionEnsure from '../middlewares/SessionEnsure.js';
+import SessionValidate from '../middlewares/SessionValidate.js';
 
 /**
  * Middleware configuration object for different middleware functions used in the application.
@@ -11,8 +12,13 @@ import ValidateJWTSession from '../middlewares/ValidateJWTSession.js';
  * @property {function} VALIDATE_JWT_SESSION - The middleware function to validate JWT sessions for protected routes.
  */
 const MIDDLEWARE = {
-    VALIDATE_API_KEY: ValidateApiKey,
-    VALIDATE_JWT_SESSION: ValidateJWTSession,
+    API: {
+        VALIDATE: ApiValidate,
+    },
+    SESSION: {
+        VALIDATE: SessionValidate,
+        ENSURE: SessionEnsure,
+    }
 }
 
 export default MIDDLEWARE;

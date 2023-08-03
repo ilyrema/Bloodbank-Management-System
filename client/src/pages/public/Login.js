@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parse } from 'cookie';
+// import { parse } from 'cookie';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,6 +28,8 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState('Warning!');
     const [errorVisibility, setErrorVisibility] = useState('invisible');
     const [disabledSubmit, setDisabledSubmit] = useState(false);
+    const background = CONTENT.BACKGROUND.COLOR || 'danger';
+    const gradient = CONTENT.BACKGROUND.GRADIENT || false;
 
     const submitReset = useCallback(() => {
         if (error) {
@@ -115,14 +117,6 @@ const Login = () => {
                     });
 
                     if (response.data.verified) {
-                        // Process and store cookies from the response
-                        const cookies = response.headers
-
-                        console.log(cookies);
-                        // cookies.forEach((cookie) => {
-                        //     document.cookie = cookie;
-                        //     console.log(cookie);
-                        // });
                         submitSuccess(response.data.message, setTimeout(() => {
                             setStep(step + 1);
                             setErrorVisibility('invisible');
@@ -161,12 +155,6 @@ const Login = () => {
                     break;
             }
         }
-
-        // if (error) {
-        //     setTimeout(() => {
-        //         submitReset();
-        //     }, timeout);
-        // }
     };
 
     useEffect(() => {
@@ -184,7 +172,7 @@ const Login = () => {
         <>
             <NavigationBar onError={error} />
             <main>
-                <div className={`alert alert-${CONTENT.NAV_COLOR} mb-0 rounded-0`}>
+                <div className={`alert alert-${background} mb-0 rounded-0`}>
                     <Container>
                         <Row>
                             <Col sm={12} md={12} lg={5} className="d-flex justify-content-center align-middle">
@@ -194,7 +182,7 @@ const Login = () => {
                                 <Container className="d-block my-5">
                                     <div className="alert alert-light position-relative shadow p-3">
                                         <form ref={formLogin} onSubmit={handleSubmit}>
-                                            <span className={`fs-6 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-${CONTENT.NAV_COLOR}`}>{error ? 'ERROR!' : `${step} of ${titles.length}`}</span>
+                                            <span className={`fs-6 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-${background} ${gradient ? 'bg-gradient' : ''}`}>{error ? 'ERROR!' : `${step} of ${titles.length}`}</span>
                                             <div className="d-flex justify-content-between">
                                                 <div className="fs-4 fw-bold">{titles[step - 1]}</div>
                                             </div>
@@ -226,14 +214,14 @@ const Login = () => {
                                                 </div>
                                                 <div className="d-md-flex justify-content-md-between d-block">
                                                     <div className="form-floating mb-3">
-                                                        <button type="button" className={`fs-6 text-${CONTENT.NAV_COLOR} border-0 bg-transparent`}>Resend code</button>
+                                                        <button type="button" className={`fs-6 text-${background} border-0 bg-transparent`}>Resend code</button>
                                                     </div>
                                                     <div className="form-floating mb-3">
                                                         <div className="fs-6">Expires in 00m 00s</div>
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                            <button type="submit" className={`btn btn-${CONTENT.NAV_COLOR} w-100`} disabled={disabledSubmit}>{(step === titles.length) ? 'Submit' : 'Next'}</button>
+                                            <button type="submit" className={`btn btn-${background} w-100`} disabled={disabledSubmit}>{(step === titles.length) ? 'Submit' : 'Next'}</button>
                                         </form>
                                     </div>
                                 </Container>

@@ -5,9 +5,9 @@ import CONTENT from '../config/content';
 
 const Footer = ({ className = "" }) => {
 
-    const background = CONTENT.NAV_COLOR || 'danger';
-    const variant = CONTENT.NAV_VARIANT || 'dark';
-    const gradient = CONTENT.NAV_GRADIENT || false;
+    const background = CONTENT.BACKGROUND.COLOR || 'danger';
+    const variant = CONTENT.BACKGROUND.VARIANT || 'dark';
+    const gradient = CONTENT.BACKGROUND.GRADIENT || false;
 
     const socialPlatforms = [
         { title: 'Facebook', to: '/', icon: 'bi-facebook' },
@@ -49,7 +49,7 @@ const Footer = ({ className = "" }) => {
     ];
 
     return (
-        <footer>
+        <footer id="footer">
             <div className={`bg-${background} ${gradient ? 'bg-gradient' : ''} text-${variant === 'dark' ? 'light' : 'dark'} mb-0 ${className}`}>
                 <Container className="py-3 d-flex justify-content-center justify-content-md-center justify-content-lg-between">
                     <div className="text-start fs-6 d-none d-lg-block">Connect with us on our social media platforms</div>

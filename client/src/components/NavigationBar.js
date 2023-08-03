@@ -10,9 +10,9 @@ const NavigationBar = ({ className = "", onError = false }) => {
     const location = useLocation();
     const credentials = localStorage.getItem('credentials');
 
-    const background = CONTENT.NAV_COLOR || 'danger';
-    const variant = CONTENT.NAV_VARIANT || 'dark';
-    const gradient = CONTENT.NAV_GRADIENT || false;
+    const background = CONTENT.BACKGROUND.COLOR || 'danger';
+    const variant = CONTENT.BACKGROUND.VARIANT || 'dark';
+    const gradient = CONTENT.BACKGROUND.GRADIENT || false;
 
     const navLinks = [
         { label: 'Home', to: onError ? null : ROUTE.PUBLIC.HOME, key: 'home' },

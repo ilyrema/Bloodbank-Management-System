@@ -1,0 +1,7 @@
+.search-result {
+    z-index: 1000;
+}
+
+.search .li {
+    color: #000;
+}

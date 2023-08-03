@@ -39,8 +39,8 @@ const ROUTE = {
 
         DASHBOARD: '/hospital/dashboard',
         HISTORY: '/hospital/history',
-        REQUEST: '/hospitals/request',
-        REPORTS: '/hospitals/reports',
+        REQUEST: '/hospital/request',
+        REPORTS: '/hospital/reports',
         SETTINGS: '/hospital/settings',
     },
     API: {

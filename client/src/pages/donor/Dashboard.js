@@ -1,4 +1,4 @@
-
+import func from "../../config/functions";
 
 /**
  * 
@@ -7,6 +7,8 @@
  * 
  **/
 const Dashboard = () => {
+
+    func.scroll();
 
     return (
         <>

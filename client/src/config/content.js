@@ -9,10 +9,11 @@ const CONTENT = {
     CONTACT: '9xxxxxxxxxx',
     TELEPHONE: '(0x) - XXXX-XXXX',
     ADDRESS: 'San Jode del Monte',
-
-    NAV_COLOR: 'danger',
-    NAV_VARIANT: 'dark',
-    NAV_GRADIENT: true,
+    BACKGROUND: {
+        COLOR: 'danger',
+        VARIANT: 'dark',
+        GRADIENT: true,
+    }
 }
 
 export default CONTENT;

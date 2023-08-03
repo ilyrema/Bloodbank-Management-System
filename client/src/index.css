@@ -7,7 +7,23 @@
     font-family: 'Poppins';
 }
 
+body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
 .text-justify {
     text-align: justify;
     text-justify: inter-word;
+}
+
+.no-focus-border:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
 }

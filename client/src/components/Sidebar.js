@@ -1,40 +1,15 @@
+// import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
 
-import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-import CONTENT from '../config/content';
 import ROUTE from '../config/routes';
 import '../assets/css/Sidebar.css';
 
 import logo from '../assets/images/logo.svg';
 
 
-const Sidebar = ({ target, credentials }) => {
+const Sidebar = ({ target, sidebarTheme, sidebarState, toggleTheme, toggleSidebar }) => {
 
-    const state = localStorage.sidebarState || 'open';
-    const theme = localStorage.sidebarTheme || 'light';
-    const [sidebarState, setSidebarState] = useState(state);
-    const [sidebarTheme, setSidebarTheme] = useState(theme);
-    const navigate = useNavigate();
     const location = useLocation();
-
-    useEffect(() => {
-        if (state !== sidebarState) {
-            setSidebarState(state);
-        }
-
-        if (theme !== sidebarTheme) {
-            setSidebarTheme(theme);
-        }
-        // eslint-disable-next-line
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('sidebarState', sidebarState);
-        localStorage.setItem('sidebarTheme', sidebarTheme);
-        document.body.className = sidebarTheme;
-    }, [sidebarState, sidebarTheme]);
-
     const navigation = [
         ...((target === 'Hospital')
             ? [
@@ -70,7 +45,7 @@ const Sidebar = ({ target, credentials }) => {
                     href: ROUTE.ADMIN.DASHBOARD,
                 },
                 {
-                    name: "Request",
+                    name: "Donor",
                     icon: "bx bx-transfer",
                     href: ROUTE.ADMIN.REQUEST,
                 },
@@ -94,14 +69,17 @@ const Sidebar = ({ target, credentials }) => {
 
 
     return (
-        <div className={`sidebar ${sidebarState} ${sidebarTheme}`}>
-            <div className="logo-details">
-                <img src={logo} className="icon" alt="..." />
-                <div className="logo-name">{CONTENT.NAME.SHORT}</div>
-                <i className={`bx bxs-${sidebarState === 'open' ? "left-arrow" : "right-arrow"} btn-sidebar`} onClick={() => { setSidebarState(sidebarState === 'open' ? 'close' : 'open') }}></i>
+        <header className={`sidebar ${sidebarState}`}>
+            <div className="company">
+                <img src={logo} className="logo" alt="..." />
+                <div className="info">
+                    <div className="name">Bloodbank</div>
+                    <div className="type">Management System</div>
+                </div>
+                <i className={`bx bxs-${sidebarState === 'open' ? "left-arrow" : "right-arrow"} btn-sidebar`} onClick={toggleSidebar}></i>
             </div>
-            <div className="menu-bar">
-                <ul className="nav-list ps-0">
+            <div className="menu">
+                <ul className="nav-list">
                     {
                         navigation.map((link) => {
                             const anchorProps = {
@@ -120,7 +98,7 @@ const Sidebar = ({ target, credentials }) => {
                             )
                         })
                     }
-                    <SidebarAnchor className="" name={sidebarTheme === 'dark' ? 'Light Mode' : 'Dark Mode'} anchorClass="btn-theme" icon={`bi bi-${sidebarTheme === 'dark' ? 'moon' : 'sun'}-fill`} onClick={() => { setSidebarTheme(sidebarTheme === 'dark' ? 'light' : 'dark') }} />
+                    <SidebarAnchor className="" name={sidebarTheme === 'dark' ? 'Light Mode' : 'Dark Mode'} anchorClass="btn-theme" icon={`bi bi-${sidebarTheme === 'dark' ? 'sun' : 'moon'}-fill`} onClick={toggleTheme} />
                     <SidebarAnchor className="profile" anchorClass="btn-theme">
                         <div className="profile-details">
                             <img className="icon" src={logo} alt="..." />
@@ -133,7 +111,7 @@ const Sidebar = ({ target, credentials }) => {
                     </SidebarAnchor>
                 </ul>
             </div>
-        </div >
+        </header >
     );
 }
 
@@ -146,7 +124,7 @@ const SidebarAnchor = ({ name, icon, href = null, onClick, className = "", ancho
         <li className={className} onClick={onClick}>
             <Link to={href} className={anchorClass}>
                 <i className={icon}></i>
-                <span className="hyperlinks">{name}</span>
+                <span className="page">{name}</span>
             </Link>
             <span className="tooltip">{name}</span>
         </li>
@@ -154,16 +132,22 @@ const SidebarAnchor = ({ name, icon, href = null, onClick, className = "", ancho
 }
 
 
-const MainContent = ({ children }) => {
+const MainContainer = ({ className = '', children }) => {
     return (
-        <main className="home-section">
-            <section className="text">
-                {children}
-            </section>
+        <main className={`main-container ${className}`}>
+            {children}
         </main>
-    )
+    );
+}
+
+const Content = ({ children }) => {
+    return (
+        <section className="content">
+            {children}
+        </section>
+    );
 }
 
 
-export { Sidebar, MainContent };
+export { Sidebar, MainContainer, Content };
 

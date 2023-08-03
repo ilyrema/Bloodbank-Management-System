@@ -1,4 +1,5 @@
-import { Sidebar, MainContent } from "../../components/Sidebar";
+import { Content, MainContainer, Sidebar } from '../../components/Sidebar';
+import func from "../../config/functions";
 
 /**
  * 
@@ -8,12 +9,18 @@ import { Sidebar, MainContent } from "../../components/Sidebar";
  **/
 const Settings = () => {
 
+    func.scroll();
+    const { sidebarTheme, sidebarState, toggleSidebar, toggleTheme } = func.sidebar();
+
     return (
         <>
-            <Sidebar target="Hospital" />
-            <MainContent>
-                Hospital Settings
-            </MainContent>
+            <Sidebar target="Hospital" sidebarTheme={sidebarTheme} sidebarState={sidebarState} toggleSidebar={toggleSidebar} toggleTheme={toggleTheme} />
+            <MainContainer>
+                <Content>
+
+                    Hospital Settings
+                </Content>
+            </MainContainer>
         </>
     );
 };
