@@ -8,15 +8,21 @@ import { LineController, CategoryScale, LinearScale, PointElement, LineElement }
 Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement);
 
 const Prediction = () => {
+
     const chartRef = useRef(null);
     const canvasRef = useRef(null);
+
+    const months = {
+        long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+    };
 
     useEffect(() => {
         const ctx = canvasRef.current;
         const chartConfig = {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                labels: months.short,
                 datasets: [
                     {
                         label: 'Predicted Blood Type',
@@ -36,6 +42,16 @@ const Prediction = () => {
             options: {
                 animation: {
                     duration: 0, // Set animation duration to 0 to disable animations
+                },
+                plugins: {
+                    legend: {
+                        display: true, // Hide the legend
+                        labels: {
+                            // Add the maxWidth property to control the width of the legend
+                            width: 10, // Adjust the value as needed
+                        },
+
+                    },
                 },
                 scales: {
                     x: {
@@ -57,12 +73,12 @@ const Prediction = () => {
                 chartRef.current.destroy();
             }
         };
+        // eslint-disable-next-line
     }, []);
 
     return (
         <>
-            <div className="fs-6">Forecasted Blood Count</div>
-            <canvas ref={canvasRef} width="200" height="70"></canvas>
+            <canvas ref={canvasRef} width="200" height="95"></canvas>
         </>
     );
 };

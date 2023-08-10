@@ -1,72 +1,18 @@
 // import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 
-import ROUTE from '../config/routes';
-import '../assets/css/Sidebar.css';
+import func from '../config/functions';
+import NAVIGATION from '../config/navigation';
 
+import '../assets/css/Sidebar.css';
 import logo from '../assets/images/logo.svg';
 
 
 const Sidebar = ({ target, sidebarTheme, sidebarState, toggleTheme, toggleSidebar }) => {
 
     const location = useLocation();
-    const navigation = [
-        ...((target === 'Hospital')
-            ? [
-                {
-                    name: "Dashboard",
-                    icon: "bx bxs-grid-alt",
-                    href: ROUTE.HOSPITAL.DASHBOARD,
-                },
-                {
-                    name: "Request",
-                    icon: "bx bx-transfer",
-                    href: ROUTE.HOSPITAL.REQUEST,
-                },
-                {
-                    name: "Reports",
-                    icon: "fa-solid fa-chart-pie",
-                    href: ROUTE.HOSPITAL.REPORTS,
-                },
-                {
-                    name: "History",
-                    icon: "fa-solid fa-clock-rotate-left",
-                    href: ROUTE.HOSPITAL.HISTORY,
-                },
-                {
-                    name: "Settings",
-                    icon: "fa-solid fa-gear",
-                    href: ROUTE.HOSPITAL.SETTINGS,
-                },
-            ] : [
-                {
-                    name: "Dashboard",
-                    icon: "bx bxs-grid-alt",
-                    href: ROUTE.ADMIN.DASHBOARD,
-                },
-                {
-                    name: "Donor",
-                    icon: "bx bx-transfer",
-                    href: ROUTE.ADMIN.REQUEST,
-                },
-                {
-                    name: "Reports",
-                    icon: "fa-solid fa-chart-pie",
-                    href: ROUTE.ADMIN.REPORTS,
-                },
-                {
-                    name: "History",
-                    icon: "fa-solid fa-clock-rotate-left",
-                    href: ROUTE.ADMIN.HISTORY,
-                },
-                {
-                    name: "Settings",
-                    icon: "fa-solid fa-gear",
-                    href: ROUTE.ADMIN.SETTINGS,
-                },
-            ])
-    ];
-
+    const type = target.toString().toLowerCase();
+    const nav = type === 'admin' ? NAVIGATION.SIDEBAR.ADMIN : (type === 'hospital' ? NAVIGATION.SIDEBAR.HOSPITAL : []);
 
     return (
         <header className={`sidebar ${sidebarState}`}>
@@ -81,7 +27,7 @@ const Sidebar = ({ target, sidebarTheme, sidebarState, toggleTheme, toggleSideba
             <div className="menu">
                 <ul className="nav-list">
                     {
-                        navigation.map((link) => {
+                        nav.map((link) => {
                             const anchorProps = {
                                 key: link.name,
                                 name: link.name,
@@ -95,7 +41,7 @@ const Sidebar = ({ target, sidebarTheme, sidebarState, toggleTheme, toggleSideba
                                 <SidebarAnchor {...anchorProps}>
                                     {link.children}
                                 </SidebarAnchor>
-                            )
+                            );
                         })
                     }
                     <SidebarAnchor className="" name={sidebarTheme === 'dark' ? 'Light Mode' : 'Dark Mode'} anchorClass="btn-theme" icon={`bi bi-${sidebarTheme === 'dark' ? 'sun' : 'moon'}-fill`} onClick={toggleTheme} />
@@ -106,7 +52,7 @@ const Sidebar = ({ target, sidebarTheme, sidebarState, toggleTheme, toggleSideba
                                 <div className="name fw-bolder">{''}</div>
                                 <div className="job">{''}</div>
                             </div>
-                            <i className="bx bx-log-out btn-logout" onClick={() => { window.location = (ROUTE.PUBLIC.LOGOUT) }}></i>
+                            <i className="bx bx-log-out btn-logout" onClick={func.logout}></i>
                         </div>
                     </SidebarAnchor>
                 </ul>
@@ -115,7 +61,8 @@ const Sidebar = ({ target, sidebarTheme, sidebarState, toggleTheme, toggleSideba
     );
 }
 
-const SidebarAnchor = ({ name, icon, href = null, onClick, className = "", anchorClass = "", children }) => {
+
+const SidebarAnchor = ({ name, icon, href = null, onClick, className = '', anchorClass = '', children }) => {
     return children ? (
         <li className={className} onClick={onClick}>
             {children}
@@ -149,5 +96,5 @@ const Content = ({ children }) => {
 }
 
 
-export { Sidebar, MainContainer, Content };
+export { Content, MainContainer, Sidebar };
 

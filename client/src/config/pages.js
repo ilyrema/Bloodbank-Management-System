@@ -1,5 +1,7 @@
 import { AdminDashboard } from '../pages/admin/Dashboard';
+import { AdminDonor } from '../pages/admin/Donor';
 import { AdminHistory } from '../pages/admin/History';
+import { AdminHospital } from '../pages/admin/Hospital';
 import { AdminReports } from '../pages/admin/Reports';
 import { AdminRequest } from '../pages/admin/Request';
 import { AdminSettings } from '../pages/admin/Settings';
@@ -27,6 +29,8 @@ import { PublicTerms } from '../pages/public/Terms';
 
 const Admin = {
     Dashboard: AdminDashboard,
+    Donor: AdminDonor,
+    Hospital: AdminHospital,
     Request: AdminRequest,
     Reports: AdminReports,
     History: AdminHistory,

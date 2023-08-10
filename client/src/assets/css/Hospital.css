@@ -1,7 +1,120 @@
-.search-result {
-    z-index: 1000;
-}
 
-.search .li {
-    color: #000;
-}
+
+/*
+// import { useState } from 'react';
+// import { Alert, Container, Dropdown, Form, InputGroup } from 'react-bootstrap';
+
+// const SearchBar = ({ target }) => {
+//     const [searchText, setSearchText] = useState('');
+//     const results = {
+//         Settings: [
+//             {
+//                 title: 'Some title 3',
+//                 subtitle: 'Some At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat',
+//                 href: '/settings-link-1',
+//             },
+//             {
+//                 title: 'Some title 1',
+//                 subtitle: 'Some subtitle',
+//                 href: '/settings-link-2',
+//             },
+//             {
+//                 title: 'Some title 2',
+//                 subtitle: 'Some subtitle',
+//                 href: '/settings-link-3',
+//             },
+//         ],
+//         Dashboard: [
+//             {
+//                 title: 'Some title 2',
+//                 subtitle: 'Some subtitle',
+//                 href: '/dashboard-link-1',
+//             },
+//             {
+//                 title: 'Some title 1',
+//                 subtitle: 'Some subtitle',
+//                 href: '/dashboard-link-2',
+//             },
+//             {
+//                 title: 'Some title 3',
+//                 subtitle: 'Some subtitle',
+//                 href: '/dashboard-link-3',
+//             },
+//         ],
+//     };
+
+//     const handleSearch = (event) => {
+//         setSearchText(event.target.value);
+//     };
+
+//     const highlightText = (text) => {
+//         if (!searchText.trim()) return text;
+//         const regex = new RegExp(searchText, 'gi');
+//         return text.replace(regex, (match) => `<mark class="search-highlight">${match}</mark>`);
+//     };
+
+//     const truncateText = (text, maxLength) => {
+//         if (text.length <= maxLength) return text;
+//         return text.slice(0, maxLength) + '...';
+//     };
+
+//     const filteredCategories = Object.entries(results)
+//         .filter(([category, entries]) => {
+//             return entries.some(
+//                 (entry) =>
+//                     entry.title.toLowerCase().includes(searchText.toLowerCase()) ||
+//                     entry.subtitle.toLowerCase().includes(searchText.toLowerCase())
+//             );
+//         })
+//         .sort(([categoryA], [categoryB]) => categoryA.localeCompare(categoryB));
+
+//     return (
+//         <Container className="alert p-0 mb-0">
+//             <InputGroup className="search-box border-bottom border-2 border-danger mb-2">
+//                 <InputGroup.Text className="fs-4 bi bi-search text-danger bg-transparent border-0"></InputGroup.Text>
+//                 <Form.Control
+//                     type="search"
+//                     size="lg"
+//                     className="search-input no-focus-border bg-transparent border-0"
+//                     value={searchText}
+//                     onChange={handleSearch}
+//                 />
+//             </InputGroup>
+//             <Alert
+//                 variant="light"
+//                 className={`w-100 position-absolute start-0 search-result fs-6 py-2 rounded-0 shadow p-3 ${searchText ? 'd-block' : 'd-none'
+//                     }`}
+//             >
+//                 {filteredCategories.length > 0 ? (
+//                     filteredCategories.map(([category, entries]) => (
+//                         <div key={category}>
+//                             <Dropdown.Header>{category}</Dropdown.Header>
+//                             {entries
+//                                 .filter((entry) =>
+//                                     entry.title.toLowerCase().includes(searchText.toLowerCase()) ||
+//                                     entry.subtitle.toLowerCase().includes(searchText.toLowerCase())
+//                                 )
+//                                 .sort((entryA, entryB) => entryA.title.localeCompare(entryB.title))
+//                                 .map((entry, index) => (
+//                                     <a
+//                                         key={index}
+//                                         className="alert alert-light btn btn-danger w-100 text-start my-1 py-2 border-0"
+//                                         href={entry.href}
+//                                     >
+//                                         <strong dangerouslySetInnerHTML={{ __html: highlightText(truncateText(entry.title, 75)) }} />
+//                                         <div dangerouslySetInnerHTML={{ __html: highlightText(truncateText(entry.subtitle, 75)) }} />
+//                                     </a>
+//                                 ))}
+//                         </div>
+//                     ))
+//                 ) : (
+//                     <Alert variant="light border-0 mb-0">No results found.</Alert>
+//                 )}
+//             </Alert>
+//         </Container>
+//     );
+// };
+
+// export default SearchBar;
+
+*/

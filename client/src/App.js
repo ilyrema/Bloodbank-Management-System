@@ -22,6 +22,8 @@ function App() {
 
                 <Route path={ROUTE.ADMIN.INDEX} element={<Navigate to={ROUTE.ADMIN.DASHBOARD} replace />} />
                 <Route path={ROUTE.ADMIN.DASHBOARD} element={<Admin.Dashboard />} />
+                <Route path={ROUTE.ADMIN.DONOR} element={<Admin.Donor />} />
+                <Route path={ROUTE.ADMIN.HOSPITAL} element={<Admin.Hospital />} />
                 <Route path={ROUTE.ADMIN.HISTORY} element={<Admin.History />} />
                 <Route path={ROUTE.ADMIN.REQUEST} element={<Admin.Request />} />
                 <Route path={ROUTE.ADMIN.REPORTS} element={<Admin.Reports />} />

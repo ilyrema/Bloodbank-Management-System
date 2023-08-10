@@ -1,5 +1,9 @@
+import { Alert, Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+
 import { Content, MainContainer, Sidebar } from '../../components/Sidebar';
 import func from "../../config/functions";
+import SearchBar from '../../components/SearchBar';
+import SidebarNav from '../../components/SidebarNav';
 
 /**
  * 
@@ -16,9 +20,16 @@ const Settings = () => {
         <>
             <Sidebar target="Hospital" sidebarTheme={sidebarTheme} sidebarState={sidebarState} toggleSidebar={toggleSidebar} toggleTheme={toggleTheme} />
             <MainContainer>
+                <SidebarNav target="Hospital" sidebarTheme={sidebarTheme} toggleTheme={toggleTheme} />
                 <Content>
-
-                    Hospital Settings
+                    <Row className="mb-3">
+                        <Col sm={12} md={9} lg={9}>
+                            <SearchBar target="Hospital" />
+                        </Col>
+                        <Col sm={12} md={3} lg={3}>
+                            <Button variant="danger" type="button" size="lg" className="text-truncate w-100">Make Request</Button>
+                        </Col>
+                    </Row>
                 </Content>
             </MainContainer>
         </>
@@ -26,3 +37,4 @@ const Settings = () => {
 };
 
 export { Settings as HospitalSettings };
+

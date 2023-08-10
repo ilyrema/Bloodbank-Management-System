@@ -29,6 +29,8 @@ const ROUTE = {
         INDEX: '/admin',
 
         DASHBOARD: '/admin/dashboard',
+        DONOR: '/admin/donor',
+        HOSPITAL: '/admin/hospital',
         HISTORY: '/admin/history',
         REQUEST: '/admin/request',
         REPORTS: '/admin/reports',
@@ -50,10 +52,11 @@ const ROUTE = {
             REGISTER: DOMAIN + '/auth/register',
             OTP: DOMAIN + '/auth/otp',
             CONTACT: DOMAIN + '/auth/contact',
+            ATTEMPT: DOMAIN + '/auth/attempt',
+            FORGOT: DOMAIN + '/auth/forgot',
         }
     }
 }
-
 
 
 export default ROUTE; 

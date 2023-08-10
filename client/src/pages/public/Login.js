@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { parse } from 'cookie';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Alert, Badge, Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Footer from '../../components/Footer';
@@ -23,11 +23,16 @@ const Login = () => {
     const formLogin = useRef(null);
     const titles = ['Account Login', 'OTP Verification'];
     const timeout = 3000;
+    const resendTimelimit = 59;
     const [step, setStep] = useState(1);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('Warning!');
     const [errorVisibility, setErrorVisibility] = useState('invisible');
     const [disabledSubmit, setDisabledSubmit] = useState(false);
+    const [resendTime, setResendTime] = useState(resendTimelimit);
+    const [resendOK, setResendOK] = useState(true);
+    const [expirationTimer, setExpirationTimer] = useState(null);
+    const [expirationTime, setExpirationTime] = useState(null);
     const background = CONTENT.BACKGROUND.COLOR || 'danger';
     const gradient = CONTENT.BACKGROUND.GRADIENT || false;
 
@@ -114,12 +119,16 @@ const Login = () => {
                         username: username.value,
                         password: password.value,
                         remember: remember.checked,
+                        resend: false,
                     });
 
                     if (response.data.verified) {
+                        const targetDate = new Date(response.data.expiration);
+
                         submitSuccess(response.data.message, setTimeout(() => {
                             setStep(step + 1);
                             setErrorVisibility('invisible');
+                            startExpirationTimer(targetDate);
                         }, timeout / 3));
                     } else {
                         submitError(response.data.message, () => {
@@ -168,11 +177,74 @@ const Login = () => {
         }
     }, [error, step, submitReset]);
 
+    const handleResendOTP = async () => {
+        const username = formLogin.current.username.value;
+        const password = formLogin.current.password.value;
+
+        if (resendOK) {
+
+            const response = await axios.post(ROUTE.API.AUTH.LOGIN, {
+                username,
+                password,
+                resend: true,
+            });
+
+            if (response.data.verified) {
+                const targetDate = new Date(response.data.expiration);
+                startExpirationTimer(targetDate);
+
+                setResendOK(false);
+                clearInterval(expirationTimer);
+            }
+        }
+    };
+
+    const startExpirationTimer = (targetDate) => {
+        if (expirationTimer) {
+            clearInterval(expirationTimer);
+        }
+        const expTimer = setInterval(() => {
+            const currentDate = new Date().getTime();
+            const remainingTime = targetDate - currentDate;
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+            const paddedMinutes = minutes.toString().padStart(2, '0');
+            const paddedSeconds = seconds.toString().padStart(2, '0');
+            if (remainingTime <= 0) {
+                clearInterval(expirationTimer);
+                setExpirationTime('One-time PIN is expired.');
+            } else {
+                setExpirationTime(`Expires in ${paddedMinutes}m ${paddedSeconds}s`)
+            }
+        }, 1000);
+        setExpirationTimer(expTimer);
+    };
+
+    useEffect(() => {
+        if (resendOK) {
+            setResendTime(resendTimelimit);
+        } else {
+            const resendTimer = setInterval(() => {
+                if (resendTime <= 0) {
+                    clearInterval(resendTimer);
+                    setResendOK(true);
+                } else {
+                    setResendTime((prevTime) => prevTime - 1);
+                }
+            }, 1000);
+
+            return () => {
+                clearInterval(resendTimer);
+            };
+        }
+    }, [resendOK, resendTime]);
+
+
     return (
         <>
             <NavigationBar onError={error} />
             <main>
-                <div className={`alert alert-${background} mb-0 rounded-0`}>
+                <Alert variant={background} className="mb-0 rounded-0">
                     <Container>
                         <Row>
                             <Col sm={12} md={12} lg={5} className="d-flex justify-content-center align-middle">
@@ -180,27 +252,27 @@ const Login = () => {
                             </Col>
                             <Col sm={12} md={12} lg={7} className="d-flex align-items-center">
                                 <Container className="d-block my-5">
-                                    <div className="alert alert-light position-relative shadow p-3">
-                                        <form ref={formLogin} onSubmit={handleSubmit}>
-                                            <span className={`fs-6 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-${background} ${gradient ? 'bg-gradient' : ''}`}>{error ? 'ERROR!' : `${step} of ${titles.length}`}</span>
+                                    <Alert variant="light" className="position-relative shadow p-3">
+                                        <Form ref={formLogin} onSubmit={handleSubmit}>
+                                            <Badge bg={background} className={`fs-6 position-absolute top-0 start-100 translate-middle ${gradient ? 'bg-gradient' : ''}`}>{error ? 'ERROR!' : `${step} of ${titles.length}`}</Badge>
                                             <div className="d-flex justify-content-between">
                                                 <div className="fs-4 fw-bold">{titles[step - 1]}</div>
                                             </div>
                                             <div className="fs-6">Plase enter your credentials.</div>
                                             <small className={`d-block mb-2 ${errorVisibility} ${error ? 'text-danger' : 'text-success'} fs-bold`}>{errorMessage}</small>
                                             <fieldset className={step === 1 ? 'd-block active' : 'd-none'}>
-                                                <div className="form-floating mb-3">
-                                                    <input name="username" type="text" className="form-control required" minLength="8" placeholder="Username" autoComplete="off" autoFocus="on" pattern="^\w+$" title="The username must consist of alphanumeric characters and underscores." />
+                                                <Form.Floating className="mb-3">
+                                                    <Form.Control name="username" type="text" className="required" minLength="8" placeholder="Username" autoComplete="off" autoFocus="on" pattern="^\w+$" title="The username must consist of alphanumeric characters and underscores." />
                                                     <label>Username</label>
-                                                </div>
-                                                <div className="form-floating mb-3">
-                                                    <input name="password" type="password" className="form-control required" minLength="8" placeholder="Password" autoComplete="off" />
+                                                </Form.Floating >
+                                                <Form.Floating className="mb-3">
+                                                    <Form.Control name="password" type="password" className="required" minLength="8" placeholder="Password" autoComplete="off" />
                                                     <label>Password</label>
-                                                </div>
+                                                </Form.Floating >
                                                 <div className="d-md-flex justify-content-md-between d-block">
                                                     <div className="form-check mb-md-3 mb-1">
-                                                        <input name="remember" className="form-check-input" type="checkbox" value="true" placeholder="Remember me" />
-                                                        <label className="form-check-label">Stay signed in</label>
+                                                        <Form.Check.Input name="remember" type="checkbox" value="true" />
+                                                        <Form.Check.Label>Stay signed in</Form.Check.Label>
                                                     </div>
                                                     <div className="form-check mb-3">
                                                         <Link className={`text-decoration-none fs-6 ${error ? 'text-secondary' : 'text-danger'}`} to={error ? null : ROUTE.PUBLIC.FORGOT_PASSWORD}>Forgot Password</Link>
@@ -208,27 +280,27 @@ const Login = () => {
                                                 </div>
                                             </fieldset>
                                             <fieldset className={step === 2 ? 'd-block active' : 'd-none'}>
-                                                <div className="form-floating mb-3">
-                                                    <input name="otp" type="number" min="0" max="999999" className="form-control required" placeholder="One-Time Password" pattern="9\d{9}" autoComplete="off" />
+                                                <Form.Floating className="mb-3">
+                                                    <Form.Control name="otp" type="number" min="0" max="999999" className="required" placeholder="One-Time Password" pattern="9\d{9}" autoComplete="off" />
                                                     <label>One-time Password</label>
-                                                </div>
+                                                </Form.Floating>
                                                 <div className="d-md-flex justify-content-md-between d-block">
-                                                    <div className="form-floating mb-3">
-                                                        <button type="button" className={`fs-6 text-${background} border-0 bg-transparent`}>Resend code</button>
-                                                    </div>
-                                                    <div className="form-floating mb-3">
-                                                        <div className="fs-6">Expires in 00m 00s</div>
-                                                    </div>
+                                                    <Form.Floating className="mb-3">
+                                                        <Button type="button" disabled={!resendOK} className={`fs-6 text-${background} border-0 bg-transparent`} onClick={handleResendOTP}>Resend code {resendTime === resendTimelimit ? null : `available in ${resendTime}s`}</Button>
+                                                    </Form.Floating>
+                                                    <Form.Floating className="mb-3">
+                                                        <div className="fs-6">{expirationTime}</div>
+                                                    </Form.Floating>
                                                 </div>
                                             </fieldset>
-                                            <button type="submit" className={`btn btn-${background} w-100`} disabled={disabledSubmit}>{(step === titles.length) ? 'Submit' : 'Next'}</button>
-                                        </form>
-                                    </div>
+                                            <Button variant={background} type="submit" className="w-100" disabled={disabledSubmit}>{(step === titles.length) ? 'Submit' : 'Next'}</Button>
+                                        </Form>
+                                    </Alert>
                                 </Container>
                             </Col>
                         </Row>
                     </Container>
-                </div>
+                </Alert>
             </main>
             <Footer />
         </>

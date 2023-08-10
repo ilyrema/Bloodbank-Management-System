@@ -1,4 +1,4 @@
-import { Col, Container, Row } from 'react-bootstrap';
+import { Alert, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import CONTENT from '../../config/content';
@@ -26,7 +26,7 @@ const Home = () => {
         <>
             <NavigationBar />
             <main>
-                <div className={`alert alert-${background} ${gradient ? 'bg-gradient' : ''} mb-0 rounded-0`}>
+                <Alert variant={background} className={`${gradient ? 'bg-gradient' : ''} mb-0 rounded-0`}>
                     <Container>
                         <Row>
                             <Col sm={0} md={12} lg={5} className="d-flex d-none d-lg-block justify-content-center align-middle">
@@ -50,8 +50,8 @@ const Home = () => {
                             </Col>
                         </Row>
                     </Container>
-                </div>
-                <div className={`alert alert-light mb-0 rounded-0`}>
+                </Alert>
+                <Alert variant="light" className="mb-0 rounded-0">
                     <Container>
                         <Row>
                             <Col sm={0} md={12} lg={5} className="d-flex d-none d-lg-block justify-content-center align-middle">
@@ -68,7 +68,7 @@ const Home = () => {
                             </Col>
                         </Row>
                     </Container>
-                </div>
+                </Alert>
             </main>
             <Footer />
         </>

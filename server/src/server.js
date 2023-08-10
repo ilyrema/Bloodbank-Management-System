@@ -1,18 +1,19 @@
 
+import { fileURLToPath } from 'url';
+import * as dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import * as dotenv from 'dotenv';
 import express from 'express';
-import session from 'express-session';
 import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import session from 'express-session';
 
-import mongodb from './config/Database.js';
 import { HTTP } from './config/Http.js';
-import MIDDLEWARE from './config/Middleware.js';
-import ROUTER from './config/Router.js';
 import CONTROLLER from './config/Controller.js';
-
+import MIDDLEWARE from './config/Middleware.js';
+import METHOD from './config/Method.js';
+import mongodb from './config/Database.js';
+import ROUTER from './config/Router.js';
+import MAIL from './config/Mail.js';
 
 dotenv.config();
 mongodb.connect();
@@ -60,6 +61,27 @@ if (process.env.NODE_ENV === 'production') {
         res.sendStatus(HTTP.NETWORK_AUTHENTICATION_REQUIRED);
     });
 }
+
+app.get('/test', (req, res) => {
+
+    // const content = { email: 'jed.terrazola.r@gmail.com', subject: 'OTP', html: MAIL.OTP, replacement: { name: 'Jed', otp: 123456, } };
+
+    const content = {
+        to: 'jed.terrazola.r@gmail.com',
+        subject: 'One-Time Password',
+        html: MAIL.OTP,
+        replacements: {
+            subject: 'One-Time Password',
+            name: 'Jed Terrazola',
+            otp: '123456',
+            image: 'https://img.freepik.com/premium-vector/blood-donors-icon-blood-logo-vector-illustration_487414-566.jpg',
+        }
+
+    };
+
+    METHOD.MAIL.SEND(content);
+    res.sendStatus(200);
+})
 
 app.listen(PORT, () => {
     console.log(`[Server Started] | Listening on port \x1b[32m${PORT}\x1b[0m`);

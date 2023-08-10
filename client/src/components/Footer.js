@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ROUTE from '../config/routes';
 import CONTENT from '../config/content';
 
+
 const Footer = ({ className = "" }) => {
 
     const background = CONTENT.BACKGROUND.COLOR || 'danger';
@@ -76,11 +77,13 @@ const Footer = ({ className = "" }) => {
                                 <Col key={section.title} sm={4} lg={2}>
                                     <div className="fs-4 fw-bold mb-2">{section.title}</div>
                                     <div className="fs-6">
-                                        {section.links.map((link) => (
-                                            <Link key={link.label} to={link.href} className="d-block text-decoration-none text-light mb-2">
-                                                {link.label}
-                                            </Link>
-                                        ))}
+                                        {
+                                            section.links.map((link) => (
+                                                <Link key={link.label} to={link.href} className="d-block text-decoration-none text-light mb-2">
+                                                    {link.label}
+                                                </Link>
+                                            ))
+                                        }
                                     </div>
                                 </Col>
                             ))

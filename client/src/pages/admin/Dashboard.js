@@ -3,6 +3,8 @@ import { Col, Row } from 'react-bootstrap';
 import { Content, MainContainer, Sidebar } from "../../components/Sidebar";
 import func from '../../config/functions';
 
+import '../../assets/css/Admin.css';
+
 /**
  * 
  * 
@@ -16,7 +18,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Sidebar target="Hospital" sidebarTheme={sidebarTheme} sidebarState={sidebarState} toggleSidebar={toggleSidebar} toggleTheme={toggleTheme} />
+            <Sidebar target="Admin" sidebarTheme={sidebarTheme} sidebarState={sidebarState} toggleSidebar={toggleSidebar} toggleTheme={toggleTheme} />
             <MainContainer>
                 <Content>
                     <Row>
