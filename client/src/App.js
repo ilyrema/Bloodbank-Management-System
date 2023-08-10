@@ -18,7 +18,6 @@ function App() {
                 <Route path={ROUTE.PUBLIC.REGISTER_HOSPITAL} element={<Public.RegisterHospital />} />
                 <Route path={ROUTE.PUBLIC.PRIVACY} element={<Public.Privacy />} />
                 <Route path={ROUTE.PUBLIC.TERMS} element={<Public.Terms />} />
-                <Route path={ROUTE.PUBLIC.TEST} element={<Public.Test />} />
                 <Route path={ROUTE.PUBLIC.LOGOUT} element={<Navigate to={ROUTE.PUBLIC.LOGIN} replace />} />
 
                 <Route path={ROUTE.ADMIN.INDEX} element={<Navigate to={ROUTE.ADMIN.DASHBOARD} replace />} />
